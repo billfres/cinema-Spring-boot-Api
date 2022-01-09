@@ -13,6 +13,6 @@ import lombok.Data;
 @Entity
 @Data
 public class Cinema /*implements Serializable*/{
-	
+	private Long id;
 
 }
