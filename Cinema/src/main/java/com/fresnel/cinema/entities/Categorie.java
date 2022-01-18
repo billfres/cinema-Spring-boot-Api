@@ -3,6 +3,7 @@ package com.fresnel.cinema.entities;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,7 @@ public class Categorie {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(length = 75)
 	private String name;
 	@OneToMany(mappedBy = "categorie")
 	private Collection<Film>  films;
