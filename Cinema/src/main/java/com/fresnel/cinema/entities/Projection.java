@@ -1,30 +1,35 @@
-package com.fresnel.cinema.dao;
+package com.fresnel.cinema.entities;
 
 import java.util.Collection;
+import java.util.Date;
 
-import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import java.io.Serializable;
-
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-public class Cinema /*implements Serializable*/{
+public class Projection {
+
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private double longitude, latitude, altitude;
-	private int nombreSalles;
+	private Long id; 
+	private Date dateProjection;
+	private double prix;
 	
-	@OneToMany(mappedBy ="cinema")
-	private Collection<Salle> salles;
+	@ManyToOne
+	private Salle salle;
+	@ManyToOne
+	private Film film;
 	
+	@OneToMany(mappedBy = "projection")
+	private Collection<Ticket> tickets;
+	@ManyToOne
+	private Seance seance;
 }
