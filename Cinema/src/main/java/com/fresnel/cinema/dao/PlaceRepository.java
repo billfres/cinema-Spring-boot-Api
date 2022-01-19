@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.fresnel.cinema.entities.Place;
 
+
+
 @RepositoryRestResource
 @CrossOrigin("*")
 public interface PlaceRepository extends JpaRepository<Place, Long> {
