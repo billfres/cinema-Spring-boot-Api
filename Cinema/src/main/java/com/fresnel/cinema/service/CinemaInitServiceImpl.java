@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +33,11 @@ import com.fresnel.cinema.entities.Salle;
 import com.fresnel.cinema.entities.Cinema;
 
 @Service
+@Transactional
 public class CinemaInitServiceImpl implements ICinemaInitService{
 	
-	 @Autowired
-	    private com.fresnel.cinema.dao.VilleRepository villeRepository;
+	 	@Autowired
+	    private VilleRepository villeRepository;
 	    @Autowired
 	    private CinemaRepository cinemaRepository;
 	    @Autowired
@@ -140,7 +143,7 @@ public class CinemaInitServiceImpl implements ICinemaInitService{
 	@Override
 	public void initProjections() {
 		double[] prices = new double[] {30, 40, 50, 60, 70, 80};
-        List<Film> films = filmRepository.findAll();
+       /* List<Film> films = filmRepository.findAll();
         villeRepository.findAll().forEach(ville -> {
             ville.getCinemas().forEach(cinema -> {
                 cinema.getSalle().forEach(salle -> {
@@ -157,7 +160,24 @@ public class CinemaInitServiceImpl implements ICinemaInitService{
                         });
                 });
             });
-        });
+        });*/
+		villeRepository.findAll().forEach(ville->{
+			ville.getCinemas().forEach(cinema->{
+				cinema.getSalle().forEach(salle->{
+					filmRepository.findAll().forEach(film->{
+						seanceRepository.findAll().forEach(seance->{
+							Projection projection = new Projection();
+							projection.setDateProjection(new Date());
+							projection.setFilm(film);
+							projection.setPrix(prices[new Random().nextInt(prices.length)]);
+							projection.setSalle(salle);
+							projection.setSeance(seance);
+							projectionRepository.save(projection);
+						});
+					});
+				});
+			});
+		});
 	}
 
 	@Override
