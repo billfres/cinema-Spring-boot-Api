@@ -3,6 +3,7 @@ package com.fresnel.cinema.entities;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,8 @@ public class Ticket {
 	 private Long id;
 	 private String  nomClient;
 	 private double prix;
-	 private int codePayement;
+	 @Column(unique = true, nullable = true)
+	 private Integer codePayement;
 	 private boolean reserve;
 	 
 	 @ManyToOne
